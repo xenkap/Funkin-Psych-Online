@@ -2360,7 +2360,7 @@ class PlayState extends MusicBeatState
 		{
 			// gitaroo man easter egg
 			cancelMusicFadeTween();
-			MusicBeatState.switchState(new GitarooPause());
+			FlxG.switchState(() -> new GitarooPause());
 		}
 		else {*/
 		if(FlxG.sound.music != null) {
@@ -2401,7 +2401,7 @@ class PlayState extends MusicBeatState
 		DiscordClient.resetClientID();
 		#end
 		
-		MusicBeatState.switchState(new ChartingState());
+		FlxG.switchState(() -> new ChartingState());
 	}
 
 	function openCharacterEditor()
@@ -2414,7 +2414,7 @@ class PlayState extends MusicBeatState
 		paused = true;
 		cancelMusicFadeTween();
 		#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
-		MusicBeatState.switchState(new CharacterEditorState(SONG.player2));
+		FlxG.switchState(() -> new CharacterEditorState(SONG.player2));
 	}
 
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
@@ -2444,7 +2444,7 @@ class PlayState extends MusicBeatState
 				#end
 				openSubState(new GameOverSubstate(getPlayer().getScreenPosition().x - getPlayer().positionArray[0], getPlayer().getScreenPosition().y - getPlayer().positionArray[1], camFollow.x, camFollow.y));
 
-				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				// FlxG.switchState(() -> new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 				#if DISCORD_ALLOWED
 				// Game Over doesn't get his own variable because it's only used here
@@ -2856,7 +2856,7 @@ class PlayState extends MusicBeatState
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				online.FunkinPoints.save(ratingPercent, songMisses, noteDensity, totalNotesHit, combo, playbackRate);
 				GameClient.clearOnMessage();
-				MusicBeatState.switchState(new online.states.ResultsScreen());
+				FlxG.switchState(() -> new online.states.ResultsScreen());
 			}
 			else if (isStoryMode)
 			{
@@ -2875,7 +2875,7 @@ class PlayState extends MusicBeatState
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
 					}
-					MusicBeatState.switchState(new StoryMenuState());
+					FlxG.switchState(() -> new StoryMenuState());
 
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice') && !ClientPrefs.getGameplaySetting('botplay')) {
@@ -2915,7 +2915,7 @@ class PlayState extends MusicBeatState
 				if(FlxTransitionableState.skipNextTransIn) {
 					CustomFadeTransition.nextCamera = null;
 				}
-				MusicBeatState.switchState(new FreeplayState());
+				FlxG.switchState(() -> new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
 			}
@@ -3136,17 +3136,20 @@ class PlayState extends MusicBeatState
 		if(daRating.noteSplash && !note.noteSplashData.disabled)
 			spawnNoteSplashOnNote(note);
 
-		if(!practiceMode && !cpuControlled) {
-			songScore += score;
-			GameClient.send("addScore", score);
-			if(!note.ratingDisabled)
-			{
-				songHits++;
-				totalPlayed++;
-				RecalculateRating(false);
-				GameClient.send("addHitJudge", note.rating);
-			}
+		//if(!practiceMode && !cpuControlled) {
+		songScore += score;
+		if(!note.ratingDisabled)
+		{
+			songHits++;
+			totalPlayed++;
+			RecalculateRating(false);
 		}
+
+		if (!practiceMode && !cpuControlled) {
+			GameClient.send("addScore", score);
+			GameClient.send("addHitJudge", note.rating);
+		}
+		//}
 
 		var uiPrefix:String = "";
 		var uiSuffix:String = '';
