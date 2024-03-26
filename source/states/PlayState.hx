@@ -2508,8 +2508,6 @@ class PlayState extends MusicBeatState
 					boyfriend.playAnim('hey', true);
 					boyfriend.specialAnim = true;
 					boyfriend.heyTimer = flValue2;
-					if (GameClient.isConnected() && PlayState.isCharacterPlayer(boyfriend))
-						GameClient.send("charPlay", [value1, false, true]);
 				}
 
 			case 'Set GF Speed':
@@ -2545,8 +2543,6 @@ class PlayState extends MusicBeatState
 				{
 					char.playAnim(value1, true);
 					char.specialAnim = true;
-					if (GameClient.isConnected() && PlayState.isCharacterPlayer(char))
-						GameClient.send("charPlay", [value1, char == gf, true]);
 				}
 
 			case 'Camera Follow Pos':
