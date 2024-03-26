@@ -1898,9 +1898,7 @@ class PlayState extends MusicBeatState
 			if (player == 1)
 				playerStrums.add(babyArrow);
 			else
-			{
 				opponentStrums.add(babyArrow);
-			}
 
 			if (GameClient.isConnected()) {
 				if (!playsAsBF())
