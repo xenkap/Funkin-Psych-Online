@@ -2244,8 +2244,7 @@ class PlayState extends MusicBeatState
 			{
 				if(!cpuControlled) {
 					keysCheck();
-				} else if(getPlayer().animation.curAnim != null && getPlayer().holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * getPlayer().singDuration &&
-					getPlayer().animation.curAnim.name.startsWith('sing') && !(getPlayer().animation.curAnim.name.endsWith('miss') || getOpponent().isMissing)) {
+				} else if(getPlayer().animation.curAnim != null && getPlayer().holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * getPlayer().singDuration && getPlayer().animation.curAnim.name.startsWith('sing') && !getPlayer().animation.curAnim.name.endsWith('miss')) {
 					getPlayer().dance();
 					playerHold = false;
 					//boyfriend.animation.curAnim.finish();
@@ -2254,7 +2253,7 @@ class PlayState extends MusicBeatState
 				if (GameClient.isConnected() && (!oppHold || endingSong) && getOpponent().animation.curAnim != null
 					&& getOpponent().holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * getOpponent().singDuration
 					&& getOpponent().animation.curAnim.name.startsWith('sing')
-					&& !(getOpponent().animation.curAnim.name.endsWith('miss') || getOpponent().isMissing))
+					&& !getOpponent().animation.curAnim.name.endsWith('miss'))
 				{
 					getOpponent().dance();
 					//boyfriend.animation.curAnim.finish();
@@ -3489,7 +3488,7 @@ class PlayState extends MusicBeatState
 			} else if (getPlayer().animation.curAnim != null
 					&& getPlayer().holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * getPlayer().singDuration
 					&& getPlayer().animation.curAnim.name.startsWith('sing')
-					&& !(getPlayer().animation.curAnim.name.endsWith('miss') || getPlayer().isMissing))
+					&& !getPlayer().animation.curAnim.name.endsWith('miss'))
 			{
 				getPlayer().dance();
 				//boyfriend.animation.curAnim.finish();

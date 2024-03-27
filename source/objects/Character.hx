@@ -50,7 +50,6 @@ class Character extends FlxSprite
 
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = DEFAULT_CHARACTER;
-	public var isMissing:Bool = false;
 
 	public var colorTween:FlxTween;
 	public var holdTimer:Float = 0;
@@ -244,7 +243,7 @@ class Character extends FlxSprite
 				specialAnim = false;
 				dance();
 			}
-			else if ((animation.curAnim.name.endsWith('miss') || isMissing) && animation.curAnim.finished)
+			else if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished)
 			{
 				dance();
 				animation.finish();
@@ -318,7 +317,6 @@ class Character extends FlxSprite
 		colorTransform.blueMultiplier = 1;
 
 		specialAnim = false;
-		isMissing = AnimName.endsWith("miss");
 
 		if (AnimName == "taunt") {
 			specialAnim = true;
