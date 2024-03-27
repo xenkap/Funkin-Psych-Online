@@ -302,7 +302,6 @@ class PlayState extends MusicBeatState
 	public var endCallback:Void->Void = null;
 
 	var chatBox:ChatBox;
-	@:unreflective
 	var leavePie:LeavePie;
 
 	function canInput() {
