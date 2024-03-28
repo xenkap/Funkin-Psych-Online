@@ -253,6 +253,8 @@ class GameClient {
 	}
 
 	public static function canBotplay() {
+		if (!GameClient.isConnected())
+			return true;
 		return GameClient.isOwner ? GameClient.room.state.canBotP1 : GameClient.room.state.canBotP2;
 	}
 
@@ -371,5 +373,13 @@ class GameClient {
 		if (GameClient.room.state.player2 != null && GameClient.room.state.player2.name != "")
 			return 2;
 		return 1;
+	}
+
+	public static function getStaticPlayer(?self:Bool = true) {
+		if (PlayState.instance != null) {
+			return self ? PlayState.instance.getPlayer() : PlayState.instance.getOpponent();
+		} else {
+			return online.states.Room.getStaticPlayer(self);
+		}
 	}
 }
